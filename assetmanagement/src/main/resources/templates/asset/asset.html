@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}" >
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" th:href=" @{css/bootstrap.min.css}">
+    <script src="@{js/popper.min.js}">
+  </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
+  <script src="@{js/bootstrap.min.js}">
+  </script>
+   <script>
+    var alertList = document.querySelectorAll('.alert');
+    alertList.forEach(function (alert) {
+      new bootstrap.Alert(alert)
+    })
+  </script>
+</head>
+<body>
+    <section>
+        <nav class="navbar navbar-expand-sm navbar-dark border border-bottom">
+            <a class="navbar-brand fs-5 mx-3 text-dark fw-bolder" th:text="${userDetails.name}">Asset Mutation</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto mt-2 mt-lg-0"> 
+                </ul>
+               <a name="" id="" data-bs-toggle="modal" data-bs-target="#addasset" class="btn btn-light" href="#" role="button">add Asset</a>
+
+            </div>
+        </nav>
+    </section>
+    <!-- Alert -->
+    <section>
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <strong th:text="${message}">Heading</strong>
+        </div>
+        
+        <script>
+          var alertList = document.querySelectorAll('.alert');
+          alertList.forEach(function (alert) {
+            new bootstrap.Alert(alert)
+          })
+        </script>
+        
+    </section>
+    <section>
+        <div class="modal fade" id="addasset" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                                <h5 class="modal-title" id="modalTitleId">Add asset</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                        <form action="/saveasset" method="post">
+                            <input type="hidden" name="id" value="-1">
+                            <input type="hidden" name="userid" th:value="${userDetails.id}">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control" name="name" id="formId1" placeholder="">
+                              <label for="formId1">Asset Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                              <input
+                                type="number"
+                                class="form-control" name="quantity" id="formId1" placeholder="">
+                              <label for="formId1">Quantity</label>
+                            </div>
+                            <div class="mb-3">
+                              <label for="" class="form-label">Notes</label>
+                              <textarea class="form-control" name="notes" id="" rows="3"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Add asset</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div> 
+    </section>
+    <!--  -->
+    <div class="table-responsive-sm">
+        <table class="table table-striped
+        table-hover	
+        table-borderless
+        table-primary
+        align-middle">
+            <thead class="table-light">
+                <caption>List Of Assets</caption>
+                <tr>
+                    <th>Asset name</th>
+                    <th>Quantity</th>
+                    <th>Notes</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr class="table-primary" th:each="assets : ${listOfUserAssets}">
+                        <td scope="row" th:text="${assets.assetName}">Item</td>
+                        <td th:text="${assets.quantity}">Item</td>
+                        <td th:text="${assets.notes}">Item</td>
+                        <td class="text-center"><button type="button" class="btn btn-primary">Update</button>
+                        <a name="" id="" class="btn btn-danger" th:href="@{'/deleteasset/'+${assets.id}}" role="button">Delete</a></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                </tfoot>
+        </table>
+    </div>
+    
+</body>
+</html>
